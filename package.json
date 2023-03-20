@@ -1,0 +1,41 @@
+{
+  "name": "algorithms-typescript",
+  "version": "1.0.0",
+  "main": "src/app.ts",
+  "author": "peter",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "start": "node ./bin/app.js",
+    "start:dev": "ts-node ./src/app.ts",
+    "test": "jest --detectOpenHandles --forceExit"
+  },
+  "dependencies": {
+    "@types/node": "^17.0.33",
+    "typescript": "^4.6.4"
+  },
+  "devDependencies": {
+    "@types/jest": "^27.5.1",
+    "jest": "^28.1.0",
+    "prettier": "^2.6.2",
+    "ts-jest": "^28.0.2",
+    "ts-node": "^10.7.0"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.ts$": "ts-jest"
+    },
+    "testRegex": "\\.test\\.ts$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "json"
+    ],
+    "globals": {
+      "ts-jest": {
+        "diagnostics": true
+      }
+    }
+  }
+}
