@@ -33,4 +33,12 @@ describe('bowling test', () => {
     rollMany(g, 17, 0);
     expect(g.score()).toEqual(20);
   });
+
+  it('마지막 프레임에 spare 가 있는 경우', () => {
+    rollMany(g, 18, 0);
+    g.roll(3);
+    g.roll(7); // spare
+    g.roll(5);
+    expect(g.score()).toEqual(15);
+  });
 });
