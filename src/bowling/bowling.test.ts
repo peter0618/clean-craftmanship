@@ -46,4 +46,96 @@ describe('bowling test', () => {
     rollMany(g, 12, 10);
     expect(g.score()).toEqual(300);
   });
+
+  it('strike with no bonus', () => {
+    g.roll(10);
+    rollMany(g, 18, 0);
+    expect(g.score()).toEqual(10);
+  });
+
+  it('mixed case1', () => {
+    // frame1
+    g.roll(1);
+    g.roll(4);
+
+    // frame2
+    g.roll(4);
+    g.roll(5);
+
+    // frame3
+    g.roll(6);
+    g.roll(4);
+
+    // frame4
+    g.roll(5);
+    g.roll(5);
+
+    // frame5
+    g.roll(10);
+
+    // frame6
+    g.roll(0);
+    g.roll(1);
+
+    // frame7
+    g.roll(7);
+    g.roll(3);
+
+    // frame8
+    g.roll(6);
+    g.roll(4);
+
+    // frame9
+    g.roll(10);
+
+    // frame10
+    g.roll(2);
+    g.roll(8);
+    g.roll(6);
+
+    expect(g.score()).toEqual(133);
+  });
+
+  it('mixed case2', () => {
+    // 참고: https://tootock.tistory.com/5
+
+    // frame1
+    g.roll(10);
+
+    // frame2
+    g.roll(10);
+
+    // frame3
+    g.roll(10);
+
+    // frame4
+    g.roll(7);
+    g.roll(2);
+
+    // frame5
+    g.roll(8);
+    g.roll(2);
+
+    // frame6
+    g.roll(0);
+    g.roll(9);
+
+    // frame7
+    g.roll(10);
+
+    // frame8
+    g.roll(7);
+    g.roll(3);
+
+    // frame9
+    g.roll(9);
+    g.roll(0);
+
+    // frame10
+    g.roll(10);
+    g.roll(10);
+    g.roll(8);
+
+    expect(g.score()).toEqual(180);
+  });
 });
