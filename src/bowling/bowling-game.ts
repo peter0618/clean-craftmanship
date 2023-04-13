@@ -1,41 +1,54 @@
 export class BowlingGame {
-  // 보너스 점수를 계산하려면 roll 자체를 저장하는 것이 필요해보임.
   private rolls: number[] = [];
 
   roll(pin: number) {
     this.rolls.push(pin);
+
+    const lastIndex = this.rolls.length - 1;
+    if (this.isStrike(lastIndex) && !this.isInTheLastFrame(lastIndex)) {
+      this.rolls.push(0); // 계산의 편의를 위해, strike 인 경우 프레임의 두번째 roll 을 0 으로 설정합니다.
+    }
   }
 
-  score() {
-    let totalScore = 0;
-    totalScore = this.calcBasicScore(totalScore);
-    totalScore = this.calcAndAddSpareBonusScore(totalScore);
-
-    return totalScore;
+  score(): number {
+    return this.calcBasicScore() + this.calcBonusScore();
   }
 
-  private calcAndAddSpareBonusScore(totalScore: number) {
+  private calcBasicScore(): number {
+    let score = 0;
+    for (let i = 0; i < this.rolls.length; i++) {
+      score += this.rolls[i];
+    }
+    return score;
+  }
+
+  private calcBonusScore(): number {
+    let bonusScore = 0;
     for (let j = 0; j < this.rolls.length; j += 2) {
-      if (this.isTheLastFrame(j)) break; // 마지막 프레임에서는 보너스를 계산하지 않고 종료합니다.;
+      if (this.isInTheLastFrame(j)) break; // 마지막 프레임에서는 보너스를 계산하지 않습니다.
       if (this.isSpare(j)) {
-        totalScore += this.rolls[j + 2];
+        bonusScore += this.rolls[j + 2];
+      } else if (this.isStrike(j)) {
+        // 스트라이크이면, 다음 공 2개에 대한 점수를 더한다.
+        // 그런데, 스트라이크가 연속으로 2번이면... 그 다음공인 j+4 번째 pin 수를 더해야 함.
+        bonusScore += this.rolls[j + 2];
+        bonusScore += this.isStrike(j + 2) ? this.rolls[j + 4] : this.rolls[j + 3];
       }
     }
-    return totalScore;
+    return bonusScore;
   }
 
-  private calcBasicScore(totalScore: number) {
-    for (let i = 0; i < this.rolls.length; i++) {
-      totalScore += this.rolls[i];
-    }
-    return totalScore;
+  private isStrike(j: number): boolean {
+    return this.rolls[j] === 10 && j % 2 === 0;
   }
 
-  private isTheLastFrame(j: number) {
-    return j === 18;
+  private isInTheLastFrame(j: number): boolean {
+    return j >= 18;
   }
 
-  private isSpare(j: number) {
+  private isSpare(j: number): boolean {
+    if (j % 2 === 1) throw Error('index error of isSpare method');
+    if (this.isStrike(j)) return false;
     return this.rolls[j] + this.rolls[j + 1] === 10;
   }
 }

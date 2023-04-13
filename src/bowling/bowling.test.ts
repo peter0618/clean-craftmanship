@@ -1,6 +1,6 @@
 import { BowlingGame } from './bowling-game';
 
-function rollMany(g: BowlingGame, n: number, pin: number) {
+function rollMany(g: BowlingGame, n: number, pin: number): void {
   for (let i = 0; i < n; i++) {
     g.roll(pin);
   }
@@ -40,5 +40,10 @@ describe('bowling test', () => {
     g.roll(7); // spare
     g.roll(5);
     expect(g.score()).toEqual(15);
+  });
+
+  it('perfect game', () => {
+    rollMany(g, 12, 10);
+    expect(g.score()).toEqual(300);
   });
 });
