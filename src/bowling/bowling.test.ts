@@ -1,5 +1,11 @@
 import { BowlingGame } from './bowling-game';
 
+function rollMany(g: BowlingGame, n: number, pin: number) {
+  for (let i = 0; i < n; i++) {
+    g.roll(pin);
+  }
+}
+
 describe('bowling test', () => {
   let g: BowlingGame;
 
@@ -16,9 +22,7 @@ describe('bowling test', () => {
   });
 
   it('gutter game 의 결과 점수는 0 입니다.', () => {
-    for (let i = 0; i < 20; i++) {
-      g.roll(0);
-    }
+    rollMany(g, 20, 0);
     expect(g.score()).toEqual(0);
   });
 
@@ -26,9 +30,7 @@ describe('bowling test', () => {
     g.roll(3);
     g.roll(7); // spare
     g.roll(5);
-    for (let i = 0; i < 17; i++) {
-      g.roll(0);
-    }
+    rollMany(g, 17, 0);
     expect(g.score()).toEqual(20);
   });
 });
